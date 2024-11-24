@@ -13,7 +13,7 @@ export default function Events() {
   useEffect(() => {
     async function fetchEvents() {
       try {
-        const response = await fetch("http://ergast.com/api/f1/current.json");
+        const response = await fetch("https://ergast.com/api/f1/current.json");
         const data = await response.json();
 
         // Trier les événements en passés et à venir
