@@ -17,8 +17,8 @@ export default function Navbar() {
     <header className="fixed top-0 left-0 right-0 bg-white shadow-md z-50">
       <div className="px-4 lg:px-6 h-14 flex items-center justify-between">
         {/* Logo */}
-        <Link href="/" className="flex items-center justify-center">
-          <span className="ml-2 text-2xl font-bold text-red-600 RaceSport">
+        <Link href="/" className="flex items-center h-full">
+          <span className="text-2xl font-bold text-red-600 RaceSport flex items-center">
             LITS
           </span>
         </Link>

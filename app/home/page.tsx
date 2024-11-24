@@ -22,7 +22,7 @@ export function Landing() {
   useEffect(() => {
     async function fetchEvents() {
       try {
-        const response = await fetch("http://ergast.com/api/f1/current.json");
+        const response = await fetch("https://ergast.com/api/f1/current.json");
         const data = await response.json();
 
         // Filtrer les événements à venir
@@ -172,9 +172,11 @@ export function Landing() {
                       className="object-cover w-full h-full"
                       layout="fill"
                     />
-                    <Button className="absolute bottom-4 right-4 bg-red-600 text-white hover:bg-red-700">
-                      Play Now
-                    </Button>
+                    <Link href="/game">
+                      <Button className="absolute bottom-4 right-4 bg-red-600 text-white hover:bg-red-700">
+                        Play Now
+                      </Button>
+                    </Link>
                   </div>
                 </CardContent>
               </Card>
