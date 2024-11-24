@@ -1,5 +1,5 @@
+import { Card } from "@/app/components/ui/card";
 import Stats from "@/app/types/Stats";
-import { Card } from "@/components/ui/card";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
