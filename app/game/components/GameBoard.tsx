@@ -53,7 +53,7 @@ const GameBoard = ({ hints, guesses }: GameBoardProps) => {
 
   return (
     <div className="grid gap-4 mb-6 mx-auto max-w-screen-md">
-      <div className="grid grid-cols-7 gap-2 text-center font-semibold text-sm">
+      <div className="grid grid-cols-7 gap-2 text-center font-semibold text-xs md:text-md lg:text-base">
         <div>Driver</div>
         <div>Flag</div>
         <div>Team</div>
@@ -64,7 +64,7 @@ const GameBoard = ({ hints, guesses }: GameBoardProps) => {
       </div>
 
       {board.map((row, rowIndex) => (
-        <div key={rowIndex} className="grid grid-cols-7 gap-2">
+        <div key={rowIndex} className="grid grid-cols-7 gap-1 sm:gap-2">
           {row.map((cell, colIndex) => (
             <div
               key={colIndex}
@@ -80,13 +80,13 @@ const GameBoard = ({ hints, guesses }: GameBoardProps) => {
                   : ""
               }`}
             >
-              <span className="relative z-10">
+              <span className="relative z-10 text-sm md:text-md lg:text-lg">
                 {colIndex === 0 ? (
-                  <div className="text-sm">
+                  <div>
                     <div className="sm:hidden">
                       {truncateName(cell.value as string)}
                     </div>
-                    <div className="hidden sm:block">
+                    <div className="hidden sm:block md:text-sm">
                       {cell.value as string}
                     </div>
                   </div>
@@ -98,6 +98,7 @@ const GameBoard = ({ hints, guesses }: GameBoardProps) => {
                         alt="flag"
                         layout="fill"
                         objectFit="contain"
+                        className="p-1"
                       />
                     </div>
                   ) : null
@@ -120,6 +121,7 @@ const GameBoard = ({ hints, guesses }: GameBoardProps) => {
                             parent.innerHTML = `<span class="flex items-center justify-center h-full w-full">${cell.value}</span>`;
                           }
                         }}
+                        className="p-1"
                       />
                     </div>
                   ) : null

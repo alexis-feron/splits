@@ -152,7 +152,7 @@ export default function Home() {
           recycle={false}
         />
       )}
-      <main className="p-6">
+      <main className="p-4">
         <GameBoard hints={hints} guesses={guesses} />
         {!isCorrect && guesses.length < 6 ? (
           <InputBar onSubmit={handleDriverSubmit} />
