@@ -111,7 +111,7 @@ export function Landing() {
             </div>
             <div className="mx-auto grid justify-center gap-4 sm:grid-cols-2 md:max-w-[64rem] md:grid-cols-2 mt-8">
               <Card>
-                <Link href="/standings">
+                <Link href="/standings#driver-standings">
                   <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                     <CardTitle className="text-sm font-medium">
                       Driver Standings
@@ -127,7 +127,7 @@ export function Landing() {
                 </Link>
               </Card>
               <Card>
-                <Link href="/standings">
+                <Link href="/standings#constructor-standings">
                   <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                     <CardTitle className="text-sm font-medium">
                       Constructor Standings
