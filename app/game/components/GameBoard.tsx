@@ -52,15 +52,29 @@ const GameBoard = ({ hints, guesses }: GameBoardProps) => {
   };
 
   return (
-    <div className="grid gap-4 mb-6 mx-auto max-w-screen-md">
+    <div className="grid gap-2 sm:gap-3 mb-6 mx-auto max-w-screen-md">
       <div className="grid grid-cols-7 gap-2 text-center font-semibold text-xs md:text-md lg:text-base">
-        <div>Driver</div>
-        <div>Flag</div>
-        <div>Team</div>
-        <div>Car Num</div>
-        <div>Driver Age</div>
-        <div>First Year</div>
-        <div>Race Wins</div>
+        <div className="flex flex-col justify-end items-center text-center h-full">
+          Driver
+        </div>
+        <div className="flex flex-col justify-end items-center text-center h-full">
+          Flag
+        </div>
+        <div className="flex flex-col justify-end items-center text-center h-full">
+          Team
+        </div>
+        <div className="flex flex-col justify-end items-center text-center h-full">
+          Car Num
+        </div>
+        <div className="flex flex-col justify-end items-center text-center h-full">
+          Driver Age
+        </div>
+        <div className="flex flex-col justify-end items-center text-center h-full">
+          First Year
+        </div>
+        <div className="flex flex-col justify-end items-center text-center h-full">
+          Race Wins
+        </div>
       </div>
 
       {board.map((row, rowIndex) => (
