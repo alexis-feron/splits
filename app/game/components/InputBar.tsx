@@ -1,4 +1,3 @@
-import { GETDrivers } from "@/app/api/game/route";
 import { useEffect, useState } from "react";
 
 const InputBar = ({ onSubmit }: { onSubmit: (driverName: string) => void }) => {
@@ -9,7 +8,7 @@ const InputBar = ({ onSubmit }: { onSubmit: (driverName: string) => void }) => {
   const [maxHeight, setMaxHeight] = useState("200px"); // Limite initiale de la hauteur des suggestions
 
   const fetchDrivers = async () => {
-    const response = await GETDrivers();
+    const response = await fetch("/api/game/drivers");
     const data = await response.json();
     setDriversList(data);
   };
