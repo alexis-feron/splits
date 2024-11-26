@@ -73,8 +73,3 @@ export async function POST(request: Request) {
 export async function GET() {
   return NextResponse.json(getDriverOfTheDay().name);
 }
-
-export async function GetNames() {
-  const driverNames = drivers.map((driver: Driver) => driver.name);
-  return NextResponse.json(driverNames);
-}

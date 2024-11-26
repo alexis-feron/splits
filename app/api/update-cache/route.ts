@@ -1,5 +1,5 @@
-import { NextResponse } from "next/server";
 import { updateDriversCache } from "@/app/utils/updateCache";
+import { NextResponse } from "next/server";
 
 export async function POST() {
   try {
