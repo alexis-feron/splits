@@ -179,7 +179,13 @@ const getFlagUrl = (nationality: string) => {
 const fetchDrivers = async () => {
   const startYear = 2022;
   const currentYear = new Date().getFullYear();
-  const driversMap: { [driverId: string]: any } = {};
+  const driversMap: {
+    [driverId: string]: Driver & {
+      firstYear: number;
+      team: string;
+      wins?: number;
+    };
+  } = {};
 
   for (let year = startYear; year <= currentYear; year++) {
     const seasonDrivers = await fetchDriversFromAPI(year);
@@ -206,6 +212,21 @@ const fetchDrivers = async () => {
   return Object.values(driversMap);
 };
 
+interface Driver {
+  driverId: string;
+  givenName: string;
+  familyName: string;
+  nationality: string;
+  dateOfBirth: string;
+  permanentNumber?: string;
+  name?: string;
+  flag?: string;
+  age?: number;
+  firstYear?: number;
+  team?: string;
+  wins?: number;
+}
+
 // Récupère les pilotes d'une saison spécifique
 const fetchDriversFromAPI = async (season: number) => {
   const response = await fetch(`${API_BASE_URL}/${season}/drivers.json`);
@@ -213,7 +234,7 @@ const fetchDriversFromAPI = async (season: number) => {
   const drivers = data.MRData.DriverTable.Drivers;
 
   return Promise.all(
-    drivers.map(async (driver: any) => {
+    drivers.map(async (driver: Driver) => {
       const wins = await fetchDriverWins(driver.driverId);
       const team = await fetchDriverTeam(driver.driverId, season);
 
@@ -258,7 +279,8 @@ const fetchDriverWins = async (driverId: string) => {
     const races = data.MRData.RaceTable.Races;
 
     wins += races.filter(
-      (race: any) => race.Results[0].position === "1"
+      (race: { Results: { position: string }[] }) =>
+        race.Results[0].position === "1"
     ).length;
 
     hasMore = races.length === 100;
