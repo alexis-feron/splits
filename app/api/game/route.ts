@@ -1,7 +1,15 @@
-import drivers from "@/app/data/drivers";
+import Drivers from "@/app/data/drivers";
 import { Driver } from "@/app/types/Driver";
 import { Hints } from "@/app/types/Hints";
 import { NextResponse } from "next/server";
+
+let drivers: Driver[] = [];
+
+async function loadDrivers() {
+  drivers = (await Drivers()) || [];
+}
+
+await loadDrivers();
 
 // Détermine le pilote du jour (par exemple, en fonction de la date)
 const getDriverOfTheDay = (): Driver => {
@@ -64,4 +72,9 @@ export async function POST(request: Request) {
 
 export async function GET() {
   return NextResponse.json(getDriverOfTheDay().name);
+}
+
+export async function GetNames() {
+  const driverNames = drivers.map((driver: Driver) => driver.name);
+  return NextResponse.json(driverNames);
 }
