@@ -1,4 +1,4 @@
-import Drivers from "@/app/data/drivers";
+import Drivers from "@/app/services/drivers";
 import { Driver } from "@/app/types/Driver";
 import { Hints } from "@/app/types/Hints";
 import { NextResponse } from "next/server";

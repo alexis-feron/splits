@@ -8,7 +8,7 @@ const InputBar = ({ onSubmit }: { onSubmit: (driverName: string) => void }) => {
   const [maxHeight, setMaxHeight] = useState("200px"); // Limite initiale de la hauteur des suggestions
 
   const fetchDrivers = async () => {
-    const response = await fetch("/api/game/drivers");
+    const response = await fetch("/api/drivers");
     const data = await response.json();
     setDriversList(data);
   };
