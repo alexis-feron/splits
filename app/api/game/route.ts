@@ -1,6 +1,7 @@
 import Drivers from "@/app/services/drivers";
 import { Driver } from "@/app/types/Driver";
 import { Hints } from "@/app/types/Hints";
+import crypto from "crypto";
 import { NextResponse } from "next/server";
 
 let drivers: Driver[] = [];
@@ -11,9 +12,15 @@ async function loadDrivers() {
 
 await loadDrivers();
 
-// Détermine le pilote du jour (par exemple, en fonction de la date)
+// Détermine le pilote du jour
 const getDriverOfTheDay = (): Driver => {
-  const index = new Date().getDate() % drivers.length;
+  if (drivers.length === 0) {
+    throw new Error("La liste des pilotes est vide.");
+  }
+  const today = new Date().toISOString().slice(0, 10);
+  const hash = crypto.createHash("sha256").update(today).digest("hex");
+  const numericHash = parseInt(hash.slice(0, 8), 16);
+  const index = numericHash % drivers.length;
   return drivers[index];
 };
 
