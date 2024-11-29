@@ -94,7 +94,7 @@ const GameBoard = ({ hints, guesses }: GameBoardProps) => {
                   : ""
               }`}
             >
-              <span className="relative z-10 text-sm md:text-md lg:text-lg">
+              <span className="relative z-10 text-sm md:text-md lg:text-lg break-words">
                 {colIndex === 0 ? (
                   <div>
                     <div className="sm:hidden">
@@ -122,8 +122,12 @@ const GameBoard = ({ hints, guesses }: GameBoardProps) => {
                       <Image
                         src={
                           "/logos/" +
-                          (cell.value as string).replace(" ", "") +
-                          ".png"
+                          (
+                            (cell.value as string)
+                              .replace("F1", "")
+                              .replace("Team", "")
+                              .replace(" ", "") + ".png"
+                          ).replace(" ", "")
                         }
                         alt={cell.value as string}
                         layout="fill"
@@ -132,7 +136,7 @@ const GameBoard = ({ hints, guesses }: GameBoardProps) => {
                           const target = e.target as HTMLImageElement;
                           const parent = target.parentElement;
                           if (parent) {
-                            parent.innerHTML = `<span class="flex items-center justify-center h-full w-full">${cell.value}</span>`;
+                            parent.innerHTML = `<span class="flex items-center justify-center h-full w-full md:text-sm">${cell.value}</span>`;
                           }
                         }}
                         className="p-1"
