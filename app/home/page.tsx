@@ -12,7 +12,7 @@ import { Trophy } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import EventCard from "../events/components/EventCard";
+import EventCard from "../components/EventCard";
 import Race from "../types/Race";
 
 export function Landing() {

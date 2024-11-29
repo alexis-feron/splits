@@ -3,7 +3,7 @@
 import type Events from "@/app/types/Events";
 import Race from "@/app/types/Race";
 import { useEffect, useState } from "react";
-import EventCard from "./components/EventCard";
+import EventCard from "../components/EventCard";
 
 export default function Events() {
   const [events, setEvents] = useState<Events>({ upcoming: [], past: [] });
