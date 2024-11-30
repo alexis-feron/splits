@@ -14,6 +14,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import EventCard from "../components/EventCard";
 import Race from "../types/Race";
+import ThankYouBubble from "./components/ThankYouBubble";
 
 export function Landing() {
   const [upcomingEvents, setUpcomingEvents] = useState([]);
@@ -224,6 +225,7 @@ export function Landing() {
             </div>
           </div>
         </section>
+        <ThankYouBubble />
       </main>
     </div>
   );

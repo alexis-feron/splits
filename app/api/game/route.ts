@@ -29,7 +29,12 @@ const generateHints = (guess: Driver, target: Driver): Hints => {
   return [
     guess.name === target.name ? "correct" : "incorrect",
     guess.flag === target.flag ? "correct" : "incorrect",
-    guess.team === target.team ? "correct" : "incorrect",
+    guess.teams[guess.teams.length - 1] ===
+    target.teams[target.teams.length - 1]
+      ? "correct"
+      : target.teams.includes(guess.teams[guess.teams.length - 1])
+      ? "partially correct"
+      : "incorrect",
     guess.carNumber === target.carNumber
       ? "correct"
       : guess.carNumber > target.carNumber

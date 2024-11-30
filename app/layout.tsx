@@ -26,7 +26,12 @@ export default function RootLayout({
           <p className="text-xs text-gray-500 text-center w-full">
             © {new Date().getFullYear()}{" "}
             <span className="RaceSport">LITS</span> -{" "}
-            <Link className="hover:text-black" href="https://alexis-feron.com">
+            <Link
+              className="hover:text-black"
+              href="https://alexis-feron.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               Alexis Feron
             </Link>
           </p>

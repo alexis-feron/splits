@@ -23,7 +23,10 @@ const GameBoard = ({ hints, guesses }: GameBoardProps) => {
           const row = [
             { value: guess.name, hint: hints[currentRow]?.[0] || ("" as Hint) },
             { value: guess.flag, hint: hints[currentRow]?.[1] || ("" as Hint) },
-            { value: guess.team, hint: hints[currentRow]?.[2] || ("" as Hint) },
+            {
+              value: guess.teams[guess.teams.length - 1],
+              hint: hints[currentRow]?.[2] || ("" as Hint),
+            },
             {
               value: guess.carNumber,
               hint: hints[currentRow]?.[3] || ("" as Hint),
@@ -82,15 +85,17 @@ const GameBoard = ({ hints, guesses }: GameBoardProps) => {
           {row.map((cell, colIndex) => (
             <div
               key={colIndex}
-              className={`rounded-md relative md:w-24 h-12 border border-gray-700 flex items-center justify-center overflow-hidden text-center ${
+              className={`text-white rounded-md relative md:w-24 h-12 border border-gray-700 flex items-center justify-center overflow-hidden text-center ${
                 cell.hint === "correct"
-                  ? "bg-green-500"
+                  ? "bg-customGreen"
                   : cell.hint === "incorrect"
-                  ? "bg-red-500"
+                  ? "bg-customRed"
+                  : cell.hint === "partially correct"
+                  ? "bg-customYellow"
                   : cell.hint === "up"
-                  ? "bg-yellow-300 after:content-[''] after:absolute after:w-0 after:h-0 after:border-l-[75px] after:border-l-transparent after:border-r-[75px] after:border-r-transparent after:border-b-[50px] after:border-b-yellow-500"
+                  ? "bg-customPurple bg-opacity-50 after:content-[''] after:border-b-customPurple after:absolute after:w-0 after:h-0 after:border-l-[75px] after:border-l-transparent after:border-r-[75px] after:border-r-transparent after:border-b-[50px]"
                   : cell.hint === "down"
-                  ? "bg-blue-300 after:content-[''] after:absolute after:w-0 after:h-0 after:border-l-[75px] after:border-l-transparent after:border-r-[75px] after:border-r-transparent after:border-t-[50px] after:border-t-blue-500"
+                  ? "bg-customBlue bg-opacity-50 text-black after:content-[''] after:border-customBlue after:absolute after:w-0 after:h-0 after:border-l-[75px] after:border-l-transparent after:border-r-[75px] after:border-r-transparent after:border-t-[50px]"
                   : ""
               }`}
             >
@@ -126,6 +131,9 @@ const GameBoard = ({ hints, guesses }: GameBoardProps) => {
                             (cell.value as string)
                               .replace("F1", "")
                               .replace("Team", "")
+                              .replace("Racing", "")
+                              .replace("-Climax", "")
+                              .replace("-Ford", "")
                               .replace(" ", "") + ".png"
                           ).replace(" ", "")
                         }
