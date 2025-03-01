@@ -10,6 +10,12 @@ export const metadata = {
   keywords:
     "F1, Formula 1, standings, game information, upcoming events, Formula 1 news, F1 updates",
   author: "Alexis Feron",
+  manifest: "/manifest.json",
+  themeColor: "#dc2626",
+  icons: {
+    icon: "/icon-192x192.png",
+    apple: "/icon-192x192.png",
+  },
 };
 
 export default function RootLayout({
