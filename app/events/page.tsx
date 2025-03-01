@@ -13,7 +13,9 @@ export default function Events() {
   useEffect(() => {
     async function fetchEvents() {
       try {
-        const response = await fetch("https://ergast.com/api/f1/current.json");
+        const currentYear = new Date().getFullYear();
+        const url = "https://api.jolpi.ca/ergast/f1/" + currentYear + "/races/";
+        const response = await fetch(url);
         const data = await response.json();
 
         // Trier les événements en passés et à venir
@@ -77,6 +79,18 @@ export default function Events() {
             <EventCard key={event.raceName} event={event} />
           ))}
         </div>
+        {isLoading ? (
+          <div className="text-center mt-8">Loading events...</div>
+        ) : (
+          <div className="mx-auto grid justify-center gap-4 sm:grid-cols-2 md:max-w-[64rem] md:grid-cols-3 mt-8">
+            {(!events.upcoming.length && !showPastEvents) ||
+            (!events.past.length && showPastEvents) ? (
+              <p className="text-gray-500">No events.</p>
+            ) : (
+              <></>
+            )}
+          </div>
+        )}
         <div className="flex justify-center mt-8">
           <button
             onClick={() => setShowPastEvents((prev) => !prev)}

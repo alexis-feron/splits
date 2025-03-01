@@ -23,7 +23,9 @@ export function Landing() {
   useEffect(() => {
     async function fetchEvents() {
       try {
-        const response = await fetch("https://ergast.com/api/f1/current.json");
+        const currentYear = new Date().getFullYear();
+        const url = "https://api.jolpi.ca/ergast/f1/" + currentYear + "/races/";
+        const response = await fetch(url);
         const data = await response.json();
 
         // Filtrer les événements à venir
@@ -112,7 +114,10 @@ export function Landing() {
             </div>
             <div className="mx-auto grid justify-center gap-4 sm:grid-cols-2 md:max-w-[64rem] md:grid-cols-2 mt-8">
               <Card>
-                <Link href="/standings#driver-standings">
+                <Link
+                  href="/standings#driver-standings"
+                  title="Driver Standings"
+                >
                   <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                     <CardTitle className="text-sm font-medium">
                       Driver Standings
@@ -128,7 +133,10 @@ export function Landing() {
                 </Link>
               </Card>
               <Card>
-                <Link href="/standings#constructor-standings">
+                <Link
+                  href="/standings#constructor-standings"
+                  title="Constructor Standings"
+                >
                   <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                     <CardTitle className="text-sm font-medium">
                       Constructor Standings
@@ -173,7 +181,7 @@ export function Landing() {
                       className="object-cover w-full h-full"
                       layout="fill"
                     />
-                    <Link href="/game">
+                    <Link href="/game" title="Gridle">
                       <Button className="absolute bottom-4 right-4 bg-red-600 text-white hover:bg-red-700">
                         Play Now
                       </Button>
@@ -217,7 +225,7 @@ export function Landing() {
               </div>
             )}
             <div className="flex justify-center mt-8">
-              <Link href="/events">
+              <Link href="/events" title="View All Events">
                 <Button className="bg-red-600 text-white hover:bg-red-700">
                   View All Events
                 </Button>

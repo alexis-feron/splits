@@ -5,10 +5,10 @@ import useSWR from "swr";
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export default function DriverStandings() {
-  const { data, error } = useSWR(
-    "https://ergast.com/api/f1/current/driverStandings.json",
-    fetcher
-  );
+  const currentYear = new Date().getFullYear();
+  const url =
+    "https://api.jolpi.ca/ergast/f1/" + currentYear + "/driverstandings/";
+  const { data, error } = useSWR(url, fetcher);
 
   if (error)
     return (
@@ -24,12 +24,12 @@ export default function DriverStandings() {
     );
 
   const standings =
-    data.MRData.StandingsTable.StandingsLists[0].DriverStandings;
+    data.MRData.StandingsTable.StandingsLists[0]?.DriverStandings || [];
 
   return (
     <div className="w-full max-w-4xl mx-auto lg:px-24 px-2 pb-4">
       <h1 className="text-3xl font-bold text-center mb-6">
-        Driver Standings 2024
+        Driver Standings {currentYear}
       </h1>
       <div className="overflow-x-auto">
         <table className="w-full border-collapse text-left">

@@ -39,12 +39,13 @@ export default function LocalThankYouBubble() {
               <li>
                 Data Source:{" "}
                 <Link
-                  href="https://ergast.com/mrd/"
+                  href="https://api.jolpi.ca/ergast/"
                   className="hover:text-black"
                   target="_blank"
+                  title="Jolpi Ergast API"
                   rel="noopener noreferrer"
                 >
-                  Ergast API
+                  Jolpi Ergast API
                 </Link>
               </li>
               <li>
@@ -53,6 +54,7 @@ export default function LocalThankYouBubble() {
                   href="https://stewardle.com/"
                   className="hover:text-black"
                   target="_blank"
+                  title="Stewardle"
                   rel="noopener noreferrer"
                 >
                   Stewardle
