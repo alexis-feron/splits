@@ -1,19 +1,19 @@
 {
-  "name": "Mon Site PWA",
-  "short_name": "SitePWA",
-  "description": "Une Progressive Web App avec Next.js",
+  "name": "Splits - F1 Standings, Game Information, and Upcoming Events",
+  "short_name": "Splits",
+  "description": "Splits is your one-stop destination for comprehensive F1 standings, detailed game information, and updates on upcoming Formula 1 events. Stay informed with the latest in the world of Formula 1.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#dc2626",
   "icons": [
     {
-      "src": "/icons/icon-192x192.png",
+      "src": "/icon-192x192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "/icons/icon-512x512.png",
+      "src": "/icon-512x512.png",
       "sizes": "512x512",
       "type": "image/png"
     }
