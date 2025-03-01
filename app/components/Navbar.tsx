@@ -17,7 +17,7 @@ export default function Navbar() {
     <header className="fixed top-0 left-0 right-0 bg-white shadow-md z-50">
       <div className="px-4 lg:px-6 h-14 flex items-center justify-between">
         {/* Logo */}
-        <Link href="/" className="flex items-center h-full">
+        <Link href="/" className="flex items-center h-full" title="Home">
           <span className="text-2xl font-bold text-red-600 RaceSport flex items-center">
             LITS
           </span>
@@ -27,18 +27,21 @@ export default function Navbar() {
         <nav className="hidden sm:flex gap-4 sm:gap-6">
           <Link
             href="/standings"
+            title="Standings"
             className="text-sm font-medium hover:underline underline-offset-4"
           >
             Standings
           </Link>
           <Link
             href="/game"
+            title="Game"
             className="text-sm font-medium hover:underline underline-offset-4"
           >
             Game
           </Link>
           <Link
             href="/events"
+            title="Events"
             className="text-sm font-medium hover:underline underline-offset-4"
           >
             Events
@@ -60,6 +63,7 @@ export default function Navbar() {
         <div className="sm:hidden flex flex-col bg-white shadow-md">
           <Link
             href="/standings"
+            title="Standings"
             className="py-2 px-4 text-sm font-medium hover:bg-gray-100"
             onClick={() => setMenuOpen(false)}
           >
@@ -67,6 +71,7 @@ export default function Navbar() {
           </Link>
           <Link
             href="/game"
+            title="Game"
             className="py-2 px-4 text-sm font-medium hover:bg-gray-100"
             onClick={() => setMenuOpen(false)}
           >
@@ -74,6 +79,7 @@ export default function Navbar() {
           </Link>
           <Link
             href="/events"
+            title="Events"
             className="py-2 px-4 text-sm font-medium hover:bg-gray-100"
             onClick={() => setMenuOpen(false)}
           >

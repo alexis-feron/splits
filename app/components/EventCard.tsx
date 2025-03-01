@@ -62,6 +62,7 @@ export default function EventCard({ event }: { event: Race }) {
       <a
         href={getFormula1Link(event.raceName)}
         target="_blank"
+        title="Formula 1 Official Website"
         rel="noopener noreferrer"
         className="mt-2 inline-block text-red-600 hover:underline text-sm"
       >

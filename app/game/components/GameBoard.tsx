@@ -118,6 +118,7 @@ const GameBoard = ({ hints, guesses }: GameBoardProps) => {
                         layout="fill"
                         objectFit="contain"
                         className="p-1"
+                        title="Flag"
                       />
                     </div>
                   ) : null
@@ -139,6 +140,7 @@ const GameBoard = ({ hints, guesses }: GameBoardProps) => {
                         }
                         alt={cell.value as string}
                         layout="fill"
+                        title={(cell.value as string) + " Team Logo"}
                         objectFit="contain"
                         onError={(e) => {
                           const target = e.target as HTMLImageElement;

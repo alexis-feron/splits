@@ -22,9 +22,14 @@ const InputBar = ({ onSubmit }: { onSubmit: (driverName: string) => void }) => {
     setDriverName(inputValue);
 
     if (inputValue) {
+      const normalizeString = (str: string) =>
+        str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
       setFilteredDrivers(
         driversList.filter((driver) =>
-          driver.toLowerCase().includes(inputValue.toLowerCase())
+          normalizeString(driver.toLowerCase()).includes(
+            normalizeString(inputValue.toLowerCase())
+          )
         )
       );
       setIsSuggestionsVisible(true);
