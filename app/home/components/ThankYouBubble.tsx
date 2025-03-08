@@ -42,10 +42,10 @@ export default function LocalThankYouBubble() {
                   href="https://api.jolpi.ca/ergast/"
                   className="hover:text-black"
                   target="_blank"
-                  title="Jolpi Ergast API"
+                  title="Jolpica Ergast API"
                   rel="noopener noreferrer"
                 >
-                  Jolpi Ergast API
+                  Jolpica Ergast API
                 </Link>
               </li>
               <li>
