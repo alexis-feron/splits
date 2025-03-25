@@ -7,7 +7,7 @@ const fetcher = (url: string) => fetch(url).then((res) => res.json());
 export default function ConstructorStandings() {
   const currentYear = new Date().getFullYear();
   const url =
-    "https://api.jolpi.ca/ergast/f1/" + currentYear + "/driverstandings/";
+    "https://api.jolpi.ca/ergast/f1/" + currentYear + "/constructorstandings/";
   const { data, error } = useSWR(url, fetcher);
 
   if (error)
