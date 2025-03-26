@@ -51,7 +51,7 @@ export function Landing() {
         <section
           className="w-full min-h-screen flex items-center justify-center py-12 md:py-24 lg:py-32 xl:py-48 bg-black"
           style={{
-            backgroundImage: "url('/banner.jpg')",
+            backgroundImage: "url('/banner.webp')",
             backgroundSize: "cover",
             backgroundPosition: "center",
           }}
@@ -77,6 +77,7 @@ export function Landing() {
                     ?.scrollIntoView({ behavior: "smooth" });
                 }}
                 className="bg-black bg-opacity-50 text-white hover:bg-white hover:text-black p-2 rounded-full pt-3"
+                aria-label="Scroll to standings section"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -106,7 +107,7 @@ export function Landing() {
                 <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
                   F1 Standings
                 </h2>
-                <p className="max-w-[900px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+                <p className="max-w-[900px] text-gray-700 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
                   Stay up-to-date with the latest Formula 1 championship
                   standings.
                 </p>
@@ -126,7 +127,7 @@ export function Landing() {
                   </CardHeader>
                   <CardContent>
                     <div className="text-2xl font-bold">View Top Drivers</div>
-                    <p className="text-xs text-muted-foreground">
+                    <p className="text-xs text-gray-700">
                       See who&apos;s leading the championship
                     </p>
                   </CardContent>
@@ -164,7 +165,7 @@ export function Landing() {
                 <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
                   F1 Game
                 </h2>
-                <p className="max-w-[900px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed"></p>
+                <p className="max-w-[900px] text-gray-700 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed"></p>
               </div>
             </div>
             <div className="mx-auto grid justify-center gap-4 grid-cols-1 mt-8 max-w-screen-md">
@@ -176,7 +177,7 @@ export function Landing() {
                 <CardContent>
                   <div className="aspect-video relative overflow-hidden rounded-lg">
                     <Image
-                      src="/game.png"
+                      src="/game.webp"
                       alt="F1 Racing Game Screenshot"
                       className="object-cover w-full h-full"
                       layout="fill"
@@ -203,7 +204,7 @@ export function Landing() {
                 <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
                   Upcoming F1 Events
                 </h2>
-                <p className="max-w-[900px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+                <p className="max-w-[900px] text-gray-700 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
                   Stay informed about the latest Formula 1 races and events.
                 </p>
               </div>
