@@ -34,6 +34,10 @@ export default function RootLayout({
         <meta property="og:title" content={metadata.title} />
         <meta property="og:description" content={metadata.description} />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta
+          name="google-site-verification"
+          content="id5BdwKoxPwKEcQ5LHteqFS6Vx0L4cQnkNCszpTTvSo"
+        />
         <title>{metadata.title}</title>
       </head>
       <body className="bg-white text-stone-900 flex flex-col min-h-screen">
