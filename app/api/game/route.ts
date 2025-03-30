@@ -40,9 +40,11 @@ const generateHints = (guess: Driver, target: Driver): Hints => {
       : guess.carNumber > target.carNumber
       ? "down"
       : "up",
-    guess.age === target.age
+    new Date(guess.dateOfBirth).getFullYear() ===
+    new Date(target.dateOfBirth).getFullYear()
       ? "correct"
-      : guess.age > target.age
+      : new Date(guess.dateOfBirth).getFullYear() >
+        new Date(target.dateOfBirth).getFullYear()
       ? "down"
       : "up",
     guess.firstYear === target.firstYear

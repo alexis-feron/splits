@@ -31,7 +31,10 @@ const GameBoard = ({ hints, guesses }: GameBoardProps) => {
               value: guess.carNumber,
               hint: hints[currentRow]?.[3] || ("" as Hint),
             },
-            { value: guess.age, hint: hints[currentRow]?.[4] || ("" as Hint) },
+            {
+              value: new Date(guess.dateOfBirth).getFullYear(),
+              hint: hints[currentRow]?.[4] || ("" as Hint),
+            },
             {
               value: guess.firstYear,
               hint: hints[currentRow]?.[5] || ("" as Hint),
@@ -70,7 +73,7 @@ const GameBoard = ({ hints, guesses }: GameBoardProps) => {
           Car Num
         </div>
         <div className="flex flex-col justify-end items-center text-center h-full">
-          Driver Age
+          Birth Year
         </div>
         <div className="flex flex-col justify-end items-center text-center h-full">
           First Year
@@ -135,6 +138,11 @@ const GameBoard = ({ hints, guesses }: GameBoardProps) => {
                               .replace("Racing", "")
                               .replace("-Climax", "")
                               .replace("-Ford", "")
+                              .replace("-Repco", "")
+                              .replace("-Alfa Romeo", "")
+                              .replace("-BRM", "")
+                              .replace("Cooper-", "")
+                              .replace(" Ford", "")
                               .replace(" ", "") + ".png"
                           ).replace(" ", "")
                         }

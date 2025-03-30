@@ -3,7 +3,10 @@ export type Driver = {
   flag: string; // URL du drapeau
   teams: string[];
   carNumber: number;
-  age: number;
   firstYear: number;
+  lastYear: number;
   wins: number;
+  nationality: string;
+  driverId: string;
+  dateOfBirth: string;
 };
