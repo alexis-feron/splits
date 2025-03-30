@@ -73,7 +73,7 @@ const GameBoard = ({ hints, guesses }: GameBoardProps) => {
           Car Num
         </div>
         <div className="flex flex-col justify-end items-center text-center h-full">
-          Birth Year
+          Year of birth
         </div>
         <div className="flex flex-col justify-end items-center text-center h-full">
           First Year
@@ -143,6 +143,7 @@ const GameBoard = ({ hints, guesses }: GameBoardProps) => {
                               .replace("-BRM", "")
                               .replace("Cooper-", "")
                               .replace(" Ford", "")
+                              .replace("Manor ", "")
                               .replace(" ", "") + ".png"
                           ).replace(" ", "")
                         }
