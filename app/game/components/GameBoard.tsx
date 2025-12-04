@@ -67,7 +67,7 @@ const GameBoard = ({ hints, guesses }: GameBoardProps) => {
           Flag
         </div>
         <div className="flex flex-col justify-end items-center text-center h-full">
-          Team
+          Last Team
         </div>
         <div className="flex flex-col justify-end items-center text-center h-full">
           Car Num
@@ -108,7 +108,21 @@ const GameBoard = ({ hints, guesses }: GameBoardProps) => {
                     <div className="sm:hidden">
                       {truncateName(cell.value as string)}
                     </div>
-                    <div className="hidden sm:block md:text-sm">
+                    <div
+                      className={`hidden sm:block ${(() => {
+                        const name = cell.value as string;
+                        const parts = name.split(" ");
+                        const hasLongPart = parts.some(
+                          (part) => part.length > 9
+                        );
+                        const lineCount = parts.length;
+
+                        if (lineCount > 2 || hasLongPart) {
+                          return "text-xs";
+                        }
+                        return "md:text-sm";
+                      })()}`}
+                    >
                       {cell.value as string}
                     </div>
                   </div>

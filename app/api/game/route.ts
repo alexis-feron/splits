@@ -35,9 +35,9 @@ const generateHints = (guess: Driver, target: Driver): Hints => {
       : target.teams.includes(guess.teams[guess.teams.length - 1])
       ? "partially correct"
       : "incorrect",
-    guess.carNumber === target.carNumber
+    Number(guess.carNumber) === Number(target.carNumber)
       ? "correct"
-      : guess.carNumber > target.carNumber
+      : Number(guess.carNumber) > Number(target.carNumber)
       ? "down"
       : "up",
     new Date(guess.dateOfBirth).getFullYear() ===

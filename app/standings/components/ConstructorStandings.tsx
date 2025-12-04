@@ -1,84 +1,140 @@
-"use client";
+import Image from "next/image";
+import {
+  getConstructorColor,
+  getConstructorLogo,
+  getNationalityFlag,
+} from "../utils/standingsUtils";
 
-import useSWR from "swr";
+interface Constructor {
+  constructorId: string;
+  name: string;
+  nationality: string;
+}
 
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
+interface ConstructorStanding {
+  position: string;
+  points: string;
+  wins: string;
+  Constructor: Constructor;
+}
 
-export default function ConstructorStandings() {
+async function getConstructorStandings(): Promise<ConstructorStanding[]> {
   const currentYear = new Date().getFullYear();
   const url =
     "https://api.jolpi.ca/ergast/f1/" + currentYear + "/constructorstandings/";
-  const { data, error } = useSWR(url, fetcher);
 
-  if (error)
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <div className="text-red-600 font-bold">Erreur de chargement...</div>
-      </div>
-    );
-  if (!data)
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-gray-300"></div>
-      </div>
-    );
+  const response = await fetch(url, {
+    next: { revalidate: 43200 }, // Cache pour 12 heures
+  });
 
-  const standings =
+  const data = await response.json();
+  return (
     data?.MRData?.StandingsTable?.StandingsLists?.[0]?.ConstructorStandings ||
-    [];
+    []
+  );
+}
+
+export default async function ConstructorStandings() {
+  const currentYear = new Date().getFullYear();
+  const standings = await getConstructorStandings();
 
   return (
-    <div className="w-full max-w-4xl mx-auto lg:px-24 px-2 pb-4">
+    <div className="w-full max-w-5xl mx-auto lg:px-24 px-2 pb-4">
       <h1 className="text-3xl font-bold text-center mb-6">
         Constructor Standings {currentYear}
       </h1>
       <div className="overflow-x-auto">
-        <table className="w-full border-collapse text-left">
-          <thead>
-            <tr>
-              <th className="py-2 px-4 border-b-2 border-gray-300 text-center">
-                #
-              </th>
-              <th className="py-2 px-4 border-b-2 border-gray-300 text-center">
-                Constructor
-              </th>
-              <th className="py-2 px-4 border-b-2 border-gray-300 text-center">
-                Points
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {standings.map(
-              (
-                constructor: {
-                  Constructor: {
-                    constructorId: string;
-                    name: string;
-                  };
-                  points: string;
-                },
-                index: number
-              ) => (
-                <tr
-                  key={constructor.Constructor.constructorId}
-                  className={`${
-                    index % 2 === 0 ? "bg-opacity-50" : "bg-opacity-5"
-                  } hover:bg-gray-100 transition duration-150`}
-                >
-                  <td className="py-2 px-4 border-b border-gray-200 text-center">
-                    {index + 1}
-                  </td>
-                  <td className="py-2 px-4 border-b border-gray-200">
-                    {constructor.Constructor.name}
-                  </td>
-                  <td className="py-2 px-4 border-b border-gray-200 text-center">
-                    {constructor.points}
-                  </td>
-                </tr>
-              )
-            )}
-          </tbody>
-        </table>
+        {/* En-tête du tableau */}
+        <div className="hidden md:grid grid-cols-[auto_auto_1fr_auto] gap-4 px-4 py-3 mb-2 text-sm font-semibold text-gray-600 uppercase">
+          <div className="w-12 text-center">Pos</div>
+          <div className="w-14">Logo</div>
+          <div>Constructor</div>
+          <div className="text-right">Points / Wins</div>
+        </div>
+        <div className="space-y-3">
+          {standings.map((constructor) => {
+            const teamColor = getConstructorColor(
+              constructor.Constructor.constructorId
+            );
+
+            return (
+              <div
+                key={constructor.Constructor.constructorId}
+                className="bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border-l-4"
+                style={{ borderLeftColor: teamColor.primary }}
+              >
+                <div className="flex items-center p-4 gap-4">
+                  {/* Position */}
+                  <div
+                    className="flex-shrink-0 w-12 h-12 flex items-center justify-center rounded-full font-bold text-xl"
+                    style={{
+                      backgroundColor: teamColor.primary,
+                      color: "white",
+                    }}
+                  >
+                    {constructor.position}
+                  </div>
+
+                  {/* Logo de l'équipe avec fond couleur équipe */}
+                  <div
+                    className="flex-shrink-0 w-14 h-14 relative rounded-lg p-2 shadow-sm"
+                    style={{
+                      background: `linear-gradient(135deg, ${teamColor.primary}30, ${teamColor.secondary}30)`,
+                    }}
+                  >
+                    <Image
+                      src={getConstructorLogo(
+                        constructor.Constructor.constructorId
+                      )}
+                      alt={constructor.Constructor.name}
+                      fill
+                      className="object-contain p-1"
+                    />
+                  </div>
+
+                  {/* Info de l'équipe */}
+                  <div className="flex-grow flex items-center gap-2">
+                    {getNationalityFlag(
+                      constructor.Constructor.nationality
+                    ) && (
+                      <div className="relative w-6 h-6 flex-shrink-0 flex items-center justify-center">
+                        <Image
+                          src={
+                            getNationalityFlag(
+                              constructor.Constructor.nationality
+                            )!
+                          }
+                          alt={constructor.Constructor.nationality}
+                          width={24}
+                          height={16}
+                          className="object-contain rounded shadow-sm"
+                          unoptimized
+                        />
+                      </div>
+                    )}
+                    <h3 className="font-bold text-lg">
+                      {constructor.Constructor.name}
+                    </h3>
+                  </div>
+
+                  {/* Points */}
+                  <div className="flex-shrink-0 text-right">
+                    <div
+                      className="font-bold text-2xl"
+                      style={{ color: teamColor.primary }}
+                    >
+                      {constructor.points}
+                    </div>
+                    <div className="text-xs text-gray-500 mt-1">
+                      {constructor.wins}{" "}
+                      {parseInt(constructor.wins) === 1 ? "win" : "wins"}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
       </div>
     </div>
   );

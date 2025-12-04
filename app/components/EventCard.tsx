@@ -6,7 +6,7 @@ export default function EventCard({ event }: { event: Race }) {
       "Australian Grand Prix": "australia",
       "Saudi Arabian Grand Prix": "saudi-arabia",
       "Bahrain Grand Prix": "bahrain",
-      "Emilia Romagna Grand Prix": "emilia-romagna",
+      "Emilia Romagna Grand Prix": "emiliaromagna",
       "Monaco Grand Prix": "monaco",
       "Spanish Grand Prix": "spain",
       "Canadian Grand Prix": "canada",
@@ -18,10 +18,14 @@ export default function EventCard({ event }: { event: Race }) {
       "Italian Grand Prix": "italy",
       "Singapore Grand Prix": "singapore",
       "Japanese Grand Prix": "japan",
+      "Chinese Grand Prix": "china",
       "Qatar Grand Prix": "qatar",
-      "United States Grand Prix": "usa",
+      "United States Grand Prix": "united-states",
       "Mexican Grand Prix": "mexico",
+      "Mexico City Grand Prix": "mexico",
       "Brazilian Grand Prix": "brazil",
+      "Sao Paulo Grand Prix": "brazil",
+      "São Paulo Grand Prix": "brazil",
       "Las Vegas Grand Prix": "las-vegas",
       "Abu Dhabi Grand Prix": "united-arab-emirates",
       "South African Grand Prix": "south-africa",
@@ -37,7 +41,8 @@ export default function EventCard({ event }: { event: Race }) {
       .replace(/[^\w-]+/g, "")
       .replace(/-$/, "");
 
-    return `https://www.formula1.com/en/racing/2024/${
+    const currentYear = new Date().getFullYear();
+    return `https://www.formula1.com/en/racing/${currentYear}/${
       raceSlugMap[raceName] || fallbackSlug
     }`;
   };

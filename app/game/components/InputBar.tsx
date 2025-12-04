@@ -80,7 +80,7 @@ const InputBar = ({ onSubmit }: { onSubmit: (driverName: string) => void }) => {
           <input
             type="text"
             placeholder="Driver"
-            className="w-full p-2 rounded-lg border border-gray-700 bg-white text-carbon-900 focus:outline-none"
+            className={`w-full p-2 border border-gray-700 bg-white text-carbon-900 focus:outline-none rounded-lg`}
             value={driverName}
             onChange={handleInputChange}
             autoComplete="off"
@@ -88,14 +88,14 @@ const InputBar = ({ onSubmit }: { onSubmit: (driverName: string) => void }) => {
 
           {isSuggestionsVisible && filteredDrivers.length > 0 && (
             <ul
-              className="absolute top-full left-0 w-full bg-white border border-gray-300 rounded-lg mt-1 z-10 shadow-lg overflow-y-auto"
+              className="absolute top-full left-2 right-2 bg-white border-b border-x border-gray-700 rounded-b-lg z-10 shadow-lg overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:rounded-br-lg [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-300"
               style={{ maxHeight }}
             >
               {filteredDrivers.map((driver) => (
                 <li
                   key={driver}
                   onClick={() => handleSuggestionClick(driver)}
-                  className="px-4 py-2 hover:bg-red-600 hover:text-white cursor-pointer"
+                  className="px-4 py-2 hover:bg-red-600 hover:text-white cursor-pointer text-carbon-900"
                 >
                   {driver}
                 </li>
