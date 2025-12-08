@@ -45,7 +45,7 @@ export default function RootLayout({
         <Navbar />
 
         {/* Main content */}
-        <main className="flex-grow pt-14">{children}</main>
+        <main className="flex-grow sm:pt-14 pb-0">{children}</main>
 
         {/* Footer */}
         <footer className="flex flex-col gap-2 sm:flex-row py-6 w-full shrink-0 items-center px-4 md:px-6 border-t">

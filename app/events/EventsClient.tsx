@@ -15,7 +15,7 @@ export default function EventsClient({ events }: EventsClientProps) {
   const displayedEvents = showPastEvents ? events.past : events.upcoming;
 
   return (
-    <section className="w-full py-4 md:py-10 lg:py-16 bg-gray-100 min-h-[calc(100vh-122px)]">
+    <section className="w-full py-8 md:py-10 lg:py-16 bg-gray-100 min-h-screen">
       <div className="container px-4 md:px-6 max-w-[1200px] mx-auto">
         <div className="text-center mb-8">
           <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">

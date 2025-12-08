@@ -29,7 +29,7 @@ export default async function Events() {
 
   if (!events.upcoming.length && !events.past.length) {
     return (
-      <div className="flex items-center justify-center h-[calc(100vh-122px)]">
+      <div className="flex items-center justify-center h-full">
         <p>No events found.</p>
       </div>
     );
