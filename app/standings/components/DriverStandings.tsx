@@ -45,7 +45,7 @@ export default async function DriverStandings() {
 
   return (
     <div className="w-full max-w-5xl mx-auto lg:px-24 px-2 pb-4">
-      <h1 className="text-3xl font-bold text-center mb-6">
+      <h1 className="text-2xl md:text-3xl font-bold text-center mb-4 md:mb-6">
         Driver Standings {currentYear}
       </h1>
       <div className="overflow-x-auto">
@@ -56,7 +56,7 @@ export default async function DriverStandings() {
           <div>Driver / Team</div>
           <div className="text-right">Points / Wins</div>
         </div>
-        <div className="space-y-3">
+        <div className="space-y-2 md:space-y-3">
           {standings.map((driver) => {
             const currentTeam =
               driver.Constructors[driver.Constructors.length - 1];
@@ -68,10 +68,10 @@ export default async function DriverStandings() {
                 className="bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border-l-4"
                 style={{ borderLeftColor: teamColor.primary }}
               >
-                <div className="flex items-center p-4 gap-4">
+                <div className="flex items-center p-2 md:p-4 gap-2 md:gap-4">
                   {/* Position */}
                   <div
-                    className="flex-shrink-0 w-12 h-12 flex items-center justify-center rounded-full font-bold text-xl"
+                    className="flex-shrink-0 w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-full font-bold text-lg md:text-xl"
                     style={{
                       backgroundColor: teamColor.primary,
                       color: "white",
@@ -82,7 +82,7 @@ export default async function DriverStandings() {
 
                   {/* Drapeau du pilote */}
                   {getNationalityFlag(driver.Driver.nationality) && (
-                    <div className="flex-shrink-0 w-14 h-14 flex items-center justify-center  rounded-lg">
+                    <div className="flex-shrink-0 w-10 h-10 md:w-14 md:h-14 flex items-center justify-center rounded-lg">
                       <Image
                         src={getNationalityFlag(driver.Driver.nationality)!}
                         alt={driver.Driver.nationality}
@@ -95,21 +95,21 @@ export default async function DriverStandings() {
                   )}
 
                   {/* Info du pilote */}
-                  <div className="flex-grow">
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <h3 className="font-bold text-lg">
+                  <div className="flex-grow min-w-0">
+                    <div className="flex items-center gap-1 md:gap-2">
+                      <h3 className="font-bold text-sm md:text-lg truncate">
                         {driver.Driver.givenName}{" "}
                         <span className="uppercase">
                           {driver.Driver.familyName}
                         </span>
                       </h3>
                     </div>
-                    <div className="flex items-center gap-2 mt-2">
+                    <div className="flex items-center gap-1 md:gap-2 mt-1 md:mt-2">
                       {/* Logo de l'équipe */}
                       <div
-                        className="flex-shrink-0 w-6 h-6 relative rounded p-1"
+                        className="flex-shrink-0 w-4 h-4 md:w-6 md:h-6 relative rounded-md p-0.5 md:p-1"
                         style={{
-                          background: `linear-gradient(135deg, ${teamColor.primary}30, ${teamColor.secondary}30)`,
+                          background: `linear-gradient(135deg, ${teamColor.primary}40, ${teamColor.secondary}40)`,
                         }}
                       >
                         <Image
@@ -119,7 +119,7 @@ export default async function DriverStandings() {
                           className="object-contain p-0.5"
                         />
                       </div>
-                      <p className="text-sm text-gray-600">
+                      <p className="text-xs md:text-sm text-gray-600 truncate">
                         {currentTeam?.name}
                       </p>
                     </div>
@@ -128,12 +128,12 @@ export default async function DriverStandings() {
                   {/* Stats */}
                   <div className="flex-shrink-0 text-right">
                     <div
-                      className="font-bold text-2xl"
+                      className="font-bold text-xl md:text-2xl"
                       style={{ color: teamColor.primary }}
                     >
                       {driver.points}
                     </div>
-                    <div className="text-xs text-gray-500 mt-1">
+                    <div className="text-xs text-gray-500 mt-0.5 md:mt-1 whitespace-nowrap">
                       {driver.wins}{" "}
                       {parseInt(driver.wins) === 1 ? "win" : "wins"}
                     </div>
