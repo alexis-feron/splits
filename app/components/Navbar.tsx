@@ -1,10 +1,10 @@
 "use client";
 
 import {
+  faCalendar,
+  faGamepad,
   faHome,
   faTrophy,
-  faGamepad,
-  faCalendar,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
@@ -24,7 +24,7 @@ export default function Navbar() {
           {/* Logo */}
           <Link href="/" className="flex items-center h-full" title="Home">
             <span className="text-2xl font-bold text-red-600 RaceSport flex items-center">
-              LITS
+              LITS
             </span>
           </Link>
 
