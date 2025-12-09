@@ -4,6 +4,7 @@ import {
   faCalendar,
   faGamepad,
   faHome,
+  faNewspaper,
   faTrophy,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -43,6 +44,13 @@ export default function Navbar() {
               className="text-sm font-medium hover:underline underline-offset-4"
             >
               Game
+            </Link>
+            <Link
+              href="/news"
+              title="News"
+              className="text-sm font-medium hover:underline underline-offset-4"
+            >
+              News
             </Link>
             <Link
               href="/events"
@@ -92,6 +100,18 @@ export default function Navbar() {
           >
             <FontAwesomeIcon icon={faGamepad} className="text-xl mb-1" />
             <span className="text-xs font-medium">Game</span>
+          </Link>
+
+          <Link
+            href="/news"
+            className={`flex flex-col items-center justify-center flex-1 h-full ${
+              isActive("/news")
+                ? "text-red-600"
+                : "text-gray-600 hover:text-gray-900"
+            }`}
+          >
+            <FontAwesomeIcon icon={faNewspaper} className="text-xl mb-1" />
+            <span className="text-xs font-medium">News</span>
           </Link>
 
           <Link
