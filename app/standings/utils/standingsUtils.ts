@@ -107,3 +107,94 @@ export function getNationalityFlag(nationality: string): string | null {
   // Utilise l'API flagcdn pour obtenir les vrais drapeaux en PNG
   return `https://flagcdn.com/w40/${countryCode}.png`;
 }
+
+// Types pour les données de l'API
+interface Race {
+  round: string;
+  date: string;
+  time?: string;
+  Sprint?: unknown;
+}
+
+interface RaceData {
+  MRData: {
+    RaceTable: {
+      Races: Race[];
+    };
+  };
+}
+
+interface SprintData {
+  MRData: {
+    RaceTable: {
+      Races: Array<{
+        round: string;
+      }>;
+    };
+  };
+}
+
+/**
+ * Calcule si le leader du classement est mathématiquement champion
+ * @param leaderPoints Points du premier
+ * @param secondPoints Points du second
+ * @param currentYear Année de la saison
+ * @returns true si le leader est champion mathématique
+ */
+export async function isChampionClinched(
+  leaderPoints: number,
+  secondPoints: number,
+  currentYear: number
+): Promise<boolean> {
+  try {
+    // Récupérer toutes les courses de la saison
+    const racesResponse = await fetch(
+      `https://api.jolpi.ca/ergast/f1/${currentYear}/races/`,
+      { next: { revalidate: 3600 } } // Cache 1 heure
+    );
+    const racesData: RaceData = await racesResponse.json();
+    const allRaces = racesData.MRData.RaceTable.Races;
+
+    // Récupérer les courses avec sprint
+    const sprintResponse = await fetch(
+      `https://api.jolpi.ca/ergast/f1/${currentYear}/sprint/`,
+      { next: { revalidate: 3600 } }
+    );
+    const sprintData: SprintData = await sprintResponse.json();
+    const sprintRounds = new Set(
+      sprintData.MRData.RaceTable.Races.map((race) => race.round)
+    );
+
+    // Déterminer la date/heure actuelle
+    const now = new Date();
+
+    // Filtrer les courses restantes (non encore complétées)
+    const remainingRaces = allRaces.filter((race) => {
+      const raceDateTime = new Date(`${race.date}T${race.time || "14:00:00Z"}`);
+      // Ajouter 3 heures après l'heure de début pour considérer la course comme terminée
+      raceDateTime.setHours(raceDateTime.getHours() + 3);
+      return raceDateTime > now;
+    });
+
+    // Calculer les points maximum restants
+    let maxPointsRemaining = 0;
+    for (const race of remainingRaces) {
+      if (sprintRounds.has(race.round)) {
+        // Course avec sprint: 25 (course) + 8 (sprint) = 33 points
+        maxPointsRemaining += 33;
+      } else {
+        // Course normale: 25 points
+        maxPointsRemaining += 25;
+      }
+    }
+
+    // Le leader est champion si même avec tous les points restants,
+    // le second ne peut pas le rattraper
+    const isChampion = leaderPoints - secondPoints > maxPointsRemaining;
+
+    return isChampion;
+  } catch (error) {
+    console.error("Error calculating champion status:", error);
+    return false;
+  }
+}

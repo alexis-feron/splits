@@ -3,6 +3,7 @@ import {
   getConstructorColor,
   getConstructorLogo,
   getNationalityFlag,
+  isChampionClinched,
 } from "../utils/standingsUtils";
 
 interface Constructor {
@@ -38,9 +39,21 @@ export default async function ConstructorStandings() {
   const currentYear = new Date().getFullYear();
   const standings = await getConstructorStandings();
 
+  // Vérifier si le leader est champion mathématique
+  let isLeaderChampion = false;
+  if (standings.length >= 2) {
+    const leaderPoints = parseFloat(standings[0].points);
+    const secondPoints = parseFloat(standings[1].points);
+    isLeaderChampion = await isChampionClinched(
+      leaderPoints,
+      secondPoints,
+      currentYear
+    );
+  }
+
   return (
-    <div className="w-full max-w-5xl mx-auto lg:px-24 px-2 pb-4">
-      <h1 className="text-2xl md:text-3xl font-bold text-center mb-4 md:mb-6">
+    <div className="w-full max-w-5xl mx-auto xl:px-20 lg:px-12 px-4 pb-4">
+      <h1 className="hidden lg:block text-2xl md:text-3xl font-bold text-center mb-4 md:mb-6">
         Constructor Standings {currentYear}
       </h1>
       <div className="overflow-x-auto">
@@ -52,16 +65,22 @@ export default async function ConstructorStandings() {
           <div className="text-right">Points / Wins</div>
         </div>
         <div className="space-y-2 md:space-y-3">
-          {standings.map((constructor) => {
+          {standings.map((constructor, index) => {
             const teamColor = getConstructorColor(
               constructor.Constructor.constructorId
             );
+            const isChampion = index === 0 && isLeaderChampion;
 
             return (
               <div
                 key={constructor.Constructor.constructorId}
-                className="bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border-l-4"
-                style={{ borderLeftColor: teamColor.primary }}
+                className="rounded-lg shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border-l-4"
+                style={{
+                  borderLeftColor: teamColor.primary,
+                  background: isChampion
+                    ? "linear-gradient(135deg, rgba(255, 215, 0, 0.3) 0%, rgba(255, 165, 0, 0.3) 100%)"
+                    : "white",
+                }}
               >
                 <div className="flex items-center p-2 md:p-4 gap-2 md:gap-4">
                   {/* Position */}
