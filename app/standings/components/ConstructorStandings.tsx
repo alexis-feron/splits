@@ -52,7 +52,7 @@ export default async function ConstructorStandings() {
   }
 
   return (
-    <div className="w-full max-w-5xl mx-auto xl:px-20 lg:px-12 px-4 pb-4">
+    <div className="w-full max-w-5xl mx-auto xl:px-20 lg:px-12 md:px-4 px-0 pb-4">
       <h1 className="hidden lg:block text-2xl md:text-3xl font-bold text-center mb-4 md:mb-6">
         Constructor Standings {currentYear}
       </h1>
