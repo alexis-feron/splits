@@ -105,7 +105,7 @@ export function getNationalityFlag(nationality: string): string | null {
   const countryCode = nationalityToCountryCode[nationality];
   if (!countryCode) return null;
   // Utilise l'API flagcdn pour obtenir les vrais drapeaux en PNG
-  return `https://flagcdn.com/w40/${countryCode}.png`;
+  return `https://flagcdn.com/w320/${countryCode}.png`;
 }
 
 // Types pour les données de l'API
@@ -197,4 +197,70 @@ export async function isChampionClinched(
     console.error("Error calculating champion status:", error);
     return false;
   }
+}
+
+/**
+ * Calcule l'âge à partir d'une date de naissance
+ * @param dateOfBirth Date de naissance au format string
+ * @returns Âge en années
+ */
+export function calculateAge(dateOfBirth: string): number {
+  const birthDate = new Date(dateOfBirth);
+  const today = new Date();
+  let age = today.getFullYear() - birthDate.getFullYear();
+  const monthDiff = today.getMonth() - birthDate.getMonth();
+  if (
+    monthDiff < 0 ||
+    (monthDiff === 0 && today.getDate() < birthDate.getDate())
+  ) {
+    age--;
+  }
+  return age;
+}
+
+/**
+ * Formate une date en string lisible
+ * @param dateString Date au format string
+ * @returns Date formatée en français
+ */
+export function formatDate(dateString: string): string {
+  const date = new Date(dateString);
+  return date.toLocaleDateString("fr-FR", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+}
+
+/**
+ * Retourne les classes CSS pour la couleur selon la position
+ * @param position Position finale (string ou number)
+ * @returns Classes Tailwind CSS
+ */
+export function getPositionColor(position: string | number): string {
+  const pos = typeof position === "string" ? parseInt(position) : position;
+  if (isNaN(pos)) return "bg-gray-100 text-gray-800";
+  if (pos === 1)
+    return "bg-gradient-to-r from-yellow-400 to-yellow-600 text-white";
+  if (pos === 2)
+    return "bg-gradient-to-r from-gray-300 to-gray-400 text-gray-800";
+  if (pos === 3)
+    return "bg-gradient-to-r from-orange-400 to-orange-600 text-white";
+  if (pos <= 10) return "bg-green-100 text-green-800";
+  return "bg-gray-100 text-gray-800";
+}
+
+/**
+ * Calcule le nombre de podiums depuis une liste de résultats
+ * @param results Tableau de résultats de courses
+ * @returns Nombre de podiums (positions 1-3)
+ */
+export function calculatePodiums(
+  results: Array<{ position: string | number }>
+): number {
+  return results.filter((r) => {
+    const pos =
+      typeof r.position === "string" ? parseInt(r.position) : r.position;
+    return !isNaN(pos) && pos <= 3;
+  }).length;
 }

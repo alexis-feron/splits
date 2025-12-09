@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import {
   getConstructorColor,
   getConstructorLogo,
@@ -72,17 +73,22 @@ export default async function ConstructorStandings() {
             const isChampion = index === 0 && isLeaderChampion;
 
             return (
-              <div
+              <Link
                 key={constructor.Constructor.constructorId}
-                className="rounded-lg shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border-l-4"
-                style={{
-                  borderLeftColor: teamColor.primary,
-                  background: isChampion
-                    ? "linear-gradient(135deg, rgba(255, 215, 0, 0.3) 0%, rgba(255, 165, 0, 0.3) 100%)"
-                    : "white",
-                }}
+                href={`/constructors/${constructor.Constructor.constructorId}`}
+                className="block"
+                aria-label={`View details for ${constructor.Constructor.name}`}
               >
-                <div className="flex items-center p-2 md:p-4 gap-2 md:gap-4">
+                <div
+                  className="rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 cursor-pointer overflow-hidden border-l-4"
+                  style={{
+                    borderLeftColor: teamColor.primary,
+                    background: isChampion
+                      ? "linear-gradient(135deg, rgba(255, 215, 0, 0.3) 0%, rgba(255, 165, 0, 0.3) 100%)"
+                      : "white",
+                  }}
+                >
+                  <div className="flex items-center p-2 md:p-4 gap-2 md:gap-4">
                   {/* Position */}
                   <div
                     className="flex-shrink-0 w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-full font-bold text-lg md:text-xl"
@@ -150,7 +156,8 @@ export default async function ConstructorStandings() {
                     </div>
                   </div>
                 </div>
-              </div>
+                </div>
+              </Link>
             );
           })}
         </div>
