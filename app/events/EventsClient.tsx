@@ -10,9 +10,17 @@ interface EventsClientProps {
 }
 
 export default function EventsClient({ events }: EventsClientProps) {
-  const [showPastEvents, setShowPastEvents] = useState(false);
+  // Détermine automatiquement quelle catégorie afficher
+  const hasUpcoming = events.upcoming.length > 0;
+  const hasPast = events.past.length > 0;
+  const defaultShowPast = !hasUpcoming && hasPast;
+
+  const [showPastEvents, setShowPastEvents] = useState(defaultShowPast);
 
   const displayedEvents = showPastEvents ? events.past : events.upcoming;
+
+  // Affiche le bouton seulement si les deux catégories ont des événements
+  const showToggleButton = hasUpcoming && hasPast;
 
   return (
     <section className="w-full py-8 md:py-10 lg:py-16 bg-gray-100 min-h-screen">
@@ -34,22 +42,16 @@ export default function EventsClient({ events }: EventsClientProps) {
             <EventCard key={event.raceName} event={event} />
           ))}
         </div>
-        <div className="mx-auto grid justify-center gap-4 sm:grid-cols-2 md:max-w-[64rem] md:grid-cols-3 mt-8">
-          {(!events.upcoming.length && !showPastEvents) ||
-          (!events.past.length && showPastEvents) ? (
-            <p className="text-gray-500">No events.</p>
-          ) : (
-            <></>
-          )}
-        </div>
-        <div className="flex justify-center mt-8">
-          <button
-            onClick={() => setShowPastEvents((prev) => !prev)}
-            className="mt-4 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700"
-          >
-            {showPastEvents ? "View Upcoming Events" : "View Past Events"}
-          </button>
-        </div>
+        {showToggleButton && (
+          <div className="flex justify-center mt-8">
+            <button
+              onClick={() => setShowPastEvents((prev) => !prev)}
+              className="mt-4 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700"
+            >
+              {showPastEvents ? "View Upcoming Events" : "View Past Events"}
+            </button>
+          </div>
+        )}
       </div>
     </section>
   );
