@@ -70,7 +70,7 @@ export default async function DriverStandings() {
           <div>Driver / Team</div>
           <div className="text-right">Points / Wins</div>
         </div>
-        <div className="space-y-2 md:space-y-3">
+        <div className="space-y-3 md:space-y-4 p-1">
           {standings.map((driver, index) => {
             const currentTeam =
               driver.Constructors[driver.Constructors.length - 1];
@@ -81,11 +81,11 @@ export default async function DriverStandings() {
               <Link
                 key={driver.Driver.driverId}
                 href={`/drivers/${driver.Driver.driverId}`}
-                className="block"
+                className="block overflow-visible"
                 aria-label={`View details for ${driver.Driver.givenName} ${driver.Driver.familyName}`}
               >
                 <div
-                  className="rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 cursor-pointer overflow-hidden border-l-4"
+                  className="rounded-lg shadow-md hover:shadow-lg hover:scale-x-101 transition-shadow duration-300 cursor-pointer border-l-4"
                   style={{
                     borderLeftColor: teamColor.primary,
                     background: isChampion
@@ -94,76 +94,76 @@ export default async function DriverStandings() {
                   }}
                 >
                   <div className="flex items-center p-2 md:p-4 gap-2 md:gap-4">
-                  {/* Position */}
-                  <div
-                    className="flex-shrink-0 w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-full font-bold text-lg md:text-xl"
-                    style={{
-                      backgroundColor: teamColor.primary,
-                      color: "white",
-                    }}
-                  >
-                    {driver.position}
-                  </div>
-
-                  {/* Drapeau du pilote */}
-                  {getNationalityFlag(driver.Driver.nationality) && (
-                    <div className="flex-shrink-0 w-10 h-10 md:w-14 md:h-14 flex items-center justify-center rounded-lg">
-                      <Image
-                        src={getNationalityFlag(driver.Driver.nationality)!}
-                        alt={driver.Driver.nationality}
-                        width={47}
-                        height={47}
-                        className="object-cover rounded shadow-md"
-                        unoptimized
-                      />
+                    {/* Position */}
+                    <div
+                      className="flex-shrink-0 w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-full font-bold text-lg md:text-xl"
+                      style={{
+                        backgroundColor: teamColor.primary,
+                        color: "white",
+                      }}
+                    >
+                      {driver.position}
                     </div>
-                  )}
 
-                  {/* Info du pilote */}
-                  <div className="flex-grow min-w-0">
-                    <div className="flex items-center gap-1 md:gap-2">
-                      <h3 className="font-bold text-sm md:text-lg truncate">
-                        {driver.Driver.givenName}{" "}
-                        <span className="uppercase">
-                          {driver.Driver.familyName}
-                        </span>
-                      </h3>
-                    </div>
-                    <div className="flex items-center gap-1 md:gap-2 mt-1 md:mt-2">
-                      {/* Logo de l'équipe */}
-                      <div
-                        className="flex-shrink-0 w-4 h-4 md:w-6 md:h-6 relative rounded-md p-0.5 md:p-1"
-                        style={{
-                          background: `linear-gradient(135deg, ${teamColor.primary}40, ${teamColor.secondary}40)`,
-                        }}
-                      >
+                    {/* Drapeau du pilote */}
+                    {getNationalityFlag(driver.Driver.nationality) && (
+                      <div className="flex-shrink-0 w-10 h-10 md:w-14 md:h-14 flex items-center justify-center rounded-lg">
                         <Image
-                          src={getConstructorLogo(currentTeam?.constructorId)}
-                          alt={currentTeam?.name}
-                          fill
-                          className="object-contain p-0.5"
+                          src={getNationalityFlag(driver.Driver.nationality)!}
+                          alt={driver.Driver.nationality}
+                          width={47}
+                          height={47}
+                          className="object-cover rounded shadow-md"
+                          unoptimized
                         />
                       </div>
-                      <p className="text-xs md:text-sm text-gray-600 truncate">
-                        {currentTeam?.name}
-                      </p>
-                    </div>
-                  </div>
+                    )}
 
-                  {/* Stats */}
-                  <div className="flex-shrink-0 text-right">
-                    <div
-                      className="font-bold text-xl md:text-2xl"
-                      style={{ color: teamColor.primary }}
-                    >
-                      {driver.points}
+                    {/* Info du pilote */}
+                    <div className="flex-grow min-w-0">
+                      <div className="flex items-center gap-1 md:gap-2">
+                        <h3 className="font-bold text-sm md:text-lg truncate">
+                          {driver.Driver.givenName}{" "}
+                          <span className="uppercase">
+                            {driver.Driver.familyName}
+                          </span>
+                        </h3>
+                      </div>
+                      <div className="flex items-center gap-1 md:gap-2 mt-1 md:mt-2">
+                        {/* Logo de l'équipe */}
+                        <div
+                          className="flex-shrink-0 w-4 h-4 md:w-6 md:h-6 relative rounded-md p-0.5 md:p-1"
+                          style={{
+                            background: `linear-gradient(135deg, ${teamColor.primary}40, ${teamColor.secondary}40)`,
+                          }}
+                        >
+                          <Image
+                            src={getConstructorLogo(currentTeam?.constructorId)}
+                            alt={currentTeam?.name}
+                            fill
+                            className="object-contain p-0.5"
+                          />
+                        </div>
+                        <p className="text-xs md:text-sm text-gray-600 truncate">
+                          {currentTeam?.name}
+                        </p>
+                      </div>
                     </div>
-                    <div className="text-xs text-gray-500 mt-0.5 md:mt-1 whitespace-nowrap">
-                      {driver.wins}{" "}
-                      {parseInt(driver.wins) === 1 ? "win" : "wins"}
+
+                    {/* Stats */}
+                    <div className="flex-shrink-0 text-right">
+                      <div
+                        className="font-bold text-xl md:text-2xl"
+                        style={{ color: teamColor.primary }}
+                      >
+                        {driver.points}
+                      </div>
+                      <div className="text-xs text-gray-500 mt-0.5 md:mt-1 whitespace-nowrap">
+                        {driver.wins}{" "}
+                        {parseInt(driver.wins) === 1 ? "win" : "wins"}
+                      </div>
                     </div>
                   </div>
-                </div>
                 </div>
               </Link>
             );
