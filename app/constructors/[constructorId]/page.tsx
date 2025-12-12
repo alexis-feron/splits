@@ -9,6 +9,28 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 
+// Function to generate F1 car image URL
+function getConstructorCarImage(constructorId: string): string {
+  const currentYear = new Date().getFullYear();
+  // Map API constructor IDs to F1 media format (based on official F1 website)
+  const constructorMapping: { [key: string]: string } = {
+    red_bull: "redbullracing",
+    ferrari: "ferrari",
+    mercedes: "mercedes",
+    mclaren: "mclaren",
+    alpine: "alpine",
+    aston_martin: "astonmartin",
+    haas: "haasf1team",
+    rb: "racingbulls",
+    sauber: "kicksauber",
+    kick_sauber: "kicksauber",
+    williams: "williams",
+  };
+
+  const mappedId = constructorMapping[constructorId] || constructorId;
+  return `https://media.formula1.com/image/upload/c_lfill,h_224/q_auto/d_common:f1:${currentYear}:fallback:car:${currentYear}fallbackcarright.webp/v1740000000/common/f1/${currentYear}/${mappedId}/${currentYear}${mappedId}carright.webp`;
+}
+
 interface ConstructorInfo {
   constructorId: string;
   name: string;
@@ -185,7 +207,7 @@ export default async function ConstructorDetailPage({ params }: PageProps) {
 
       {/* Hero Section */}
       <div
-        className="rounded-2xl shadow-lg p-6 md:p-8 mb-8"
+        className="rounded-2xl shadow-lg p-6 md:p-8 mb-8 overflow-hidden"
         style={{
           background: `linear-gradient(135deg, ${teamColor.primary}20, ${teamColor.secondary}20)`,
           borderLeft: `6px solid ${teamColor.primary}`,
@@ -237,6 +259,19 @@ export default async function ConstructorDetailPage({ params }: PageProps) {
               <div
                 className="w-8 h-8 rounded-full shadow-md border-2 border-white"
                 style={{ backgroundColor: teamColor.secondary }}
+              />
+            </div>
+          </div>
+
+          {/* Car Image */}
+          <div className="flex-shrink-0 w-full md:w-96 lg:w-[32rem]">
+            <div className="relative w-full h-48 md:h-48 lg:h-56">
+              <Image
+                src={getConstructorCarImage(constructorId)}
+                alt={`${constructorInfo.name} ${currentYear} car`}
+                fill
+                className="object-contain"
+                unoptimized
               />
             </div>
           </div>
@@ -337,9 +372,22 @@ export default async function ConstructorDetailPage({ params }: PageProps) {
               href={constructorInfo.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-blue-600 hover:text-blue-800 underline"
+              className="text-red-600 gap-2 hover:text-red-800 underline inline-flex items-center"
             >
               Learn more on Wikipedia
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                />
+              </svg>
             </a>
           </div>
         </div>

@@ -1,5 +1,5 @@
-import { RaceDetails } from "@/app/types/EventDetails";
 import { formatDate } from "@/app/standings/utils/standingsUtils";
+import { RaceDetails } from "@/app/types/EventDetails";
 import { getCircuitImage } from "@/app/utils/circuitUtils";
 import Image from "next/image";
 
@@ -97,7 +97,7 @@ export default function CircuitHero({ raceDetails }: CircuitHeroProps) {
                 href={raceDetails.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 hover:underline transition-colors"
+                className="inline-flex items-center gap-2 text-red-600 hover:text-red-800 hover:underline transition-colors"
               >
                 <span>Learn more on Wikipedia</span>
                 <svg

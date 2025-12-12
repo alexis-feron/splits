@@ -46,9 +46,9 @@ export default function CircuitInfo({ circuit }: CircuitInfoProps) {
                 href={circuit.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-blue-600 hover:text-blue-800 underline inline-flex items-center gap-1 font-medium"
+                className="text-red-600 hover:text-red-800 underline inline-flex items-center gap-1 font-medium"
               >
-                View on Wikipedia
+                <span>View on Wikipedia</span>
                 <svg
                   className="w-4 h-4"
                   fill="none"
