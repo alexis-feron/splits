@@ -169,7 +169,7 @@ export default async function DriverDetailPage({ params }: PageProps) {
     <div className="container mx-auto px-4 py-8 max-w-7xl">
       {/* Back button */}
       <Link
-        href="/standings"
+        href="/standings#driver-standings"
         className="inline-flex items-center gap-2 mb-6 text-gray-600 hover:text-gray-900 transition-colors"
       >
         <svg
@@ -374,7 +374,14 @@ export default async function DriverDetailPage({ params }: PageProps) {
                       <td className="py-3 px-4 font-semibold">
                         {result.round}
                       </td>
-                      <td className="py-3 px-4">{result.raceName}</td>
+                      <td className="py-3 px-4">
+                        <Link
+                          href={`/events/${result.round}`}
+                          className="hover:underline hover:text-blue-600 transition-colors"
+                        >
+                          {result.raceName}
+                        </Link>
+                      </td>
                       <td className="py-3 px-4 text-gray-600">
                         {formatDate(result.date)}
                       </td>
@@ -413,7 +420,12 @@ export default async function DriverDetailPage({ params }: PageProps) {
                 >
                   <div className="flex justify-between items-start mb-2">
                     <div>
-                      <div className="font-bold text-lg">{result.raceName}</div>
+                      <Link
+                        href={`/events/${result.round}`}
+                        className="font-bold text-lg hover:underline hover:text-blue-600 transition-colors"
+                      >
+                        {result.raceName}
+                      </Link>
                       <div className="text-sm text-gray-600">
                         Round {result.round} • {formatDate(result.date)}
                       </div>

@@ -1,5 +1,3 @@
-import Image from "next/image";
-import Link from "next/link";
 import {
   calculatePodiums,
   formatDate,
@@ -8,6 +6,8 @@ import {
   getNationalityFlag,
   getPositionColor,
 } from "@/app/standings/utils/standingsUtils";
+import Image from "next/image";
+import Link from "next/link";
 
 interface ConstructorInfo {
   constructorId: string;
@@ -103,7 +103,13 @@ async function getConstructorDetails(constructorId: string, year: number) {
       constructorInfoData.MRData?.ConstructorTable?.Constructors?.[0] || null;
     const results: RaceResult[] =
       resultsData.MRData?.RaceTable?.Races?.flatMap(
-        (race: { season: string; round: string; raceName: string; date: string; Results?: RaceResult[] }) =>
+        (race: {
+          season: string;
+          round: string;
+          raceName: string;
+          date: string;
+          Results?: RaceResult[];
+        }) =>
           race.Results?.map((result) => ({
             ...result,
             season: race.season,
@@ -158,7 +164,7 @@ export default async function ConstructorDetailPage({ params }: PageProps) {
     <div className="container mx-auto px-4 py-8 max-w-7xl">
       {/* Back button */}
       <Link
-        href="/standings"
+        href="/standings#constructor-standings"
         className="inline-flex items-center gap-2 mb-6 text-gray-600 hover:text-gray-900 transition-colors"
       >
         <svg
@@ -284,27 +290,34 @@ export default async function ConstructorDetailPage({ params }: PageProps) {
         <div className="bg-white rounded-xl shadow-md p-6 mb-8">
           <h2 className="text-2xl font-bold mb-4">{currentYear} Drivers</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {drivers.map((driver: { driverId: string; code: string; givenName: string; familyName: string }) => (
-              <Link
-                key={driver.driverId}
-                href={`/drivers/${driver.driverId}`}
-                className="flex items-center gap-4 p-4 rounded-lg border-2 hover:shadow-md transition-shadow duration-300"
-                style={{ borderColor: teamColor.primary }}
-              >
-                <div
-                  className="w-12 h-12 rounded-full flex items-center justify-center font-bold text-white text-lg"
-                  style={{ backgroundColor: teamColor.primary }}
+            {drivers.map(
+              (driver: {
+                driverId: string;
+                code: string;
+                givenName: string;
+                familyName: string;
+              }) => (
+                <Link
+                  key={driver.driverId}
+                  href={`/drivers/${driver.driverId}`}
+                  className="flex items-center gap-4 p-4 rounded-lg border-2 hover:shadow-md transition-shadow duration-300"
+                  style={{ borderColor: teamColor.primary }}
                 >
-                  {driver.code}
-                </div>
-                <div className="flex-grow">
-                  <div className="font-bold text-lg">
-                    {driver.givenName}{" "}
-                    <span className="uppercase">{driver.familyName}</span>
+                  <div
+                    className="w-12 h-12 rounded-full flex items-center justify-center font-bold text-white text-lg"
+                    style={{ backgroundColor: teamColor.primary }}
+                  >
+                    {driver.code}
                   </div>
-                </div>
-              </Link>
-            ))}
+                  <div className="flex-grow">
+                    <div className="font-bold text-lg">
+                      {driver.givenName}{" "}
+                      <span className="uppercase">{driver.familyName}</span>
+                    </div>
+                  </div>
+                </Link>
+              )
+            )}
           </div>
         </div>
       )}
@@ -363,8 +376,17 @@ export default async function ConstructorDetailPage({ params }: PageProps) {
                       key={`${result.round}-${result.Driver.driverId}-${index}`}
                       className="border-b border-gray-100 hover:bg-gray-50 transition-colors"
                     >
-                      <td className="py-3 px-4 font-semibold">{result.round}</td>
-                      <td className="py-3 px-4">{result.raceName}</td>
+                      <td className="py-3 px-4 font-semibold">
+                        {result.round}
+                      </td>
+                      <td className="py-3 px-4">
+                        <Link
+                          href={`/events/${result.round}`}
+                          className="hover:underline hover:text-blue-600 transition-colors"
+                        >
+                          {result.raceName}
+                        </Link>
+                      </td>
                       <td className="py-3 px-4 text-gray-600">
                         {formatDate(result.date)}
                       </td>
@@ -402,7 +424,12 @@ export default async function ConstructorDetailPage({ params }: PageProps) {
                 >
                   <div className="flex justify-between items-start mb-2">
                     <div>
-                      <div className="font-bold text-lg">{result.raceName}</div>
+                      <Link
+                        href={`/events/${result.round}`}
+                        className="font-bold text-lg hover:underline hover:text-blue-600 transition-colors"
+                      >
+                        {result.raceName}
+                      </Link>
                       <div className="text-sm text-gray-600">
                         Round {result.round} • {formatDate(result.date)}
                       </div>
@@ -431,7 +458,9 @@ export default async function ConstructorDetailPage({ params }: PageProps) {
                     </div>
                     <div>
                       <span className="text-gray-600">Points:</span>
-                      <span className="ml-1 font-semibold">{result.points}</span>
+                      <span className="ml-1 font-semibold">
+                        {result.points}
+                      </span>
                     </div>
                   </div>
                 </div>
