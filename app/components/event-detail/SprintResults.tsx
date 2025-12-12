@@ -13,7 +13,7 @@ interface SprintResultsProps {
 
 export default function SprintResults({ sprint }: SprintResultsProps) {
   return (
-    <div className="mb-4 border-l-4 border-orange-500">
+    <div className="mb-4 md:border-l-4 border-orange-500">
       {/* Desktop version - Table */}
       <div className="hidden md:block overflow-x-auto">
         <table className="w-full">

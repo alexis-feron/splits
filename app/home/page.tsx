@@ -18,6 +18,7 @@ import ThankYouBubble from "./components/ThankYouBubble";
 
 export default function Landing() {
   const [upcomingEvents, setUpcomingEvents] = useState([]);
+  const [pastEvents, setPastEvents] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -28,13 +29,17 @@ export default function Landing() {
         const response = await fetch(url);
         const data = await response.json();
 
-        // Filtrer les événements à venir
+        // Filtrer les événements à venir et passés
         const currentDate = new Date();
-        const events = data.MRData.RaceTable.Races.filter(
+        const upcoming = data.MRData.RaceTable.Races.filter(
           (race: Race) => new Date(race.date) >= currentDate
         );
+        const past = data.MRData.RaceTable.Races.filter(
+          (race: Race) => new Date(race.date) < currentDate
+        ).reverse(); // Les plus récents en premier
 
-        setUpcomingEvents(events);
+        setUpcomingEvents(upcoming);
+        setPastEvents(past);
         setIsLoading(false);
       } catch (error) {
         console.error("Error fetching events:", error);
@@ -202,10 +207,12 @@ export default function Landing() {
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
                 <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
-                  Upcoming F1 Events
+                  {upcomingEvents.length > 0 ? "Upcoming F1 Events" : "Latest F1 Races"}
                 </h2>
                 <p className="max-w-[900px] text-gray-700 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                  Stay informed about the latest Formula 1 races and events.
+                  {upcomingEvents.length > 0
+                    ? "Stay informed about the latest Formula 1 races and events."
+                    : "Check out the most recent Formula 1 races."}
                 </p>
               </div>
             </div>
@@ -214,14 +221,20 @@ export default function Landing() {
               <div className="text-center mt-8">Loading events...</div>
             ) : (
               <div className="mx-auto grid justify-center gap-4 sm:grid-cols-2 md:max-w-[64rem] md:grid-cols-3 mt-8">
-                {upcomingEvents.length ? (
+                {upcomingEvents.length > 0 ? (
                   upcomingEvents
                     .slice(0, 3)
                     .map((event: Race) => (
                       <EventCard key={event.raceName} event={event} />
                     ))
+                ) : pastEvents.length > 0 ? (
+                  pastEvents
+                    .slice(0, 3)
+                    .map((event: Race) => (
+                      <EventCard key={event.raceName} event={event} />
+                    ))
                 ) : (
-                  <p className="text-gray-500">No upcoming events.</p>
+                  <p className="text-gray-500">No events available.</p>
                 )}
               </div>
             )}
