@@ -38,22 +38,23 @@ export default function QualifyingResults({
             return (
               <div
                 key={`${result.position}-${index}`}
-                className={`flex items-center justify-between p-3 rounded-lg border transition-all ${
+                className={`flex flex-col sm:flex-row sm:items-center p-3 rounded-lg border transition-all ${
                   isPole
                     ? "bg-yellow-50 border-yellow-400 shadow-md"
                     : "bg-gray-50 border-gray-200 hover:bg-gray-100"
                 }`}
               >
-                <div className="flex items-center gap-3 flex-grow">
+                {/* Driver info section */}
+                <div className="flex items-center gap-2 sm:gap-3 flex-grow min-w-0 mb-2 sm:mb-0">
                   <span
-                    className={`font-bold text-lg w-8 text-center ${
+                    className={`font-bold text-base sm:text-lg w-6 sm:w-8 text-center flex-shrink-0 ${
                       isPole ? "text-yellow-600" : "text-gray-700"
                     }`}
                   >
                     {result.position}
                   </span>
                   <div
-                    className="w-8 h-8 relative rounded p-1 flex-shrink-0"
+                    className="w-7 h-7 sm:w-8 sm:h-8 relative rounded p-1 flex-shrink-0"
                     style={{
                       background: `linear-gradient(135deg, ${teamColor.primary}40, ${teamColor.secondary}40)`,
                     }}
@@ -65,30 +66,31 @@ export default function QualifyingResults({
                       className="object-contain p-0.5"
                     />
                   </div>
-                  <div className="flex-grow">
+                  <div className="flex-grow min-w-0">
                     <Link
                       href={`/drivers/${result.Driver.driverId}`}
-                      className="font-semibold hover:text-blue-600 transition-colors"
+                      className="font-semibold hover:text-blue-600 transition-colors text-sm sm:text-base block truncate"
                     >
                       {result.Driver.givenName} {result.Driver.familyName}
                     </Link>
-                    <div className="text-xs text-gray-600">
+                    <div className="text-xs text-gray-600 truncate">
                       {result.Constructor.name}
                     </div>
                   </div>
                 </div>
 
-                <div className="flex gap-2 md:gap-4 text-sm font-mono">
-                  <div className="text-center w-16 md:w-20">
-                    <div className="text-xs text-gray-500">Q1</div>
+                {/* Times section */}
+                <div className="flex gap-2 sm:gap-3 text-xs sm:text-sm font-mono justify-end sm:justify-start pl-8 sm:pl-0">
+                  <div className="text-center min-w-[60px] sm:min-w-[70px]">
+                    <div className="text-[10px] sm:text-xs text-gray-500 mb-0.5">Q1</div>
                     <div className="font-semibold">{result.Q1 || "-"}</div>
                   </div>
-                  <div className="text-center w-16 md:w-20">
-                    <div className="text-xs text-gray-500">Q2</div>
+                  <div className="text-center min-w-[60px] sm:min-w-[70px]">
+                    <div className="text-[10px] sm:text-xs text-gray-500 mb-0.5">Q2</div>
                     <div className="font-semibold">{result.Q2 || "-"}</div>
                   </div>
-                  <div className="text-center w-16 md:w-20">
-                    <div className="text-xs text-gray-500">Q3</div>
+                  <div className="text-center min-w-[60px] sm:min-w-[70px]">
+                    <div className="text-[10px] sm:text-xs text-gray-500 mb-0.5">Q3</div>
                     <div
                       className={`font-semibold ${
                         isPole ? "text-yellow-600" : ""
