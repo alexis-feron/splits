@@ -9,7 +9,18 @@ export const getDrivers = async (): Promise<Driver[]> => {
   const data = await redis.json.get(CACHE_KEY);
   if (!data) throw new Error("No drivers found in Redis");
 
-  cachedDrivers = data as Driver[];
+  // Normaliser les données : convertir objet avec clés numériques en tableau
+  let drivers: Driver[];
+  if (Array.isArray(data)) {
+    drivers = data;
+  } else if (typeof data === 'object' && data !== null) {
+    // Convertir l'objet {"0": {...}, "1": {...}} en tableau
+    drivers = Object.values(data);
+  } else {
+    throw new Error("Invalid drivers format in Redis");
+  }
+
+  cachedDrivers = drivers;
   return cachedDrivers;
 };
 
