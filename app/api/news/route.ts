@@ -32,6 +32,67 @@ interface EventRegistryArticle {
   };
 }
 
+// Function to normalize strings for comparison
+function normalizeString(str: string): string {
+  return str
+    .toLowerCase()
+    .trim()
+    .replace(/[^\w\s]/g, "") // Remove punctuation
+    .replace(/\s+/g, " "); // Normalize whitespace
+}
+
+// Function to calculate similarity between two strings (Jaccard similarity)
+function calculateSimilarity(str1: string, str2: string): number {
+  const words1 = new Set(normalizeString(str1).split(" "));
+  const words2 = new Set(normalizeString(str2).split(" "));
+
+  const intersection = new Set([...words1].filter((x) => words2.has(x)));
+  const union = new Set([...words1, ...words2]);
+
+  return intersection.size / union.size;
+}
+
+// Function to remove duplicate articles
+function removeDuplicates(articles: NewsArticle[]): NewsArticle[] {
+  const uniqueArticles: NewsArticle[] = [];
+  const seenUrls = new Set<string>();
+  const seenTitles = new Set<string>();
+
+  for (const article of articles) {
+    // Skip if exact URL already exists
+    if (article.url && seenUrls.has(article.url)) {
+      continue;
+    }
+
+    // Skip if exact title already exists
+    const normalizedTitle = normalizeString(article.title);
+    if (seenTitles.has(normalizedTitle)) {
+      continue;
+    }
+
+    // Check for similar titles (>80% similarity)
+    let isDuplicate = false;
+    for (const existingArticle of uniqueArticles) {
+      const similarity = calculateSimilarity(
+        article.title,
+        existingArticle.title
+      );
+      if (similarity > 0.8) {
+        isDuplicate = true;
+        break;
+      }
+    }
+
+    if (!isDuplicate) {
+      uniqueArticles.push(article);
+      if (article.url) seenUrls.add(article.url);
+      seenTitles.add(normalizedTitle);
+    }
+  }
+
+  return uniqueArticles;
+}
+
 async function fetchNewsFromAPI(): Promise<NewsArticle[]> {
   const apiKey = process.env.NEWSAPI_TOKEN;
 
@@ -123,7 +184,8 @@ async function fetchNewsFromAPI(): Promise<NewsArticle[]> {
 
   console.log(`Retrieved ${articles.length} F1 articles from reliable sources`);
 
-  return articles;
+  // Remove duplicates
+  return removeDuplicates(articles);
 }
 
 export async function GET() {
