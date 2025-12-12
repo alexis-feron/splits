@@ -26,7 +26,9 @@ export default function Landing() {
       try {
         const currentYear = new Date().getFullYear();
         const url = "https://api.jolpi.ca/ergast/f1/" + currentYear + "/races/";
-        const response = await fetch(url);
+        const response = await fetch(url, {
+          next: { revalidate: 43200 } // Cache for 12 hours (43200 seconds)
+        });
         const data = await response.json();
 
         // Filtrer les événements à venir et passés

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, ReactNode } from "react";
+import { useState, ReactNode, useEffect } from "react";
 
 interface StandingsTabsProps {
   driversContent: ReactNode;
@@ -14,6 +14,32 @@ export default function StandingsTabs({
   const [activeTab, setActiveTab] = useState<"drivers" | "constructors">(
     "drivers"
   );
+
+  // Detect hash on mount and hash changes
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash;
+      if (hash === "#constructor-standings") {
+        setActiveTab("constructors");
+        // Scroll to top after setting the tab
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      } else if (hash === "#driver-standings") {
+        setActiveTab("drivers");
+        // Scroll to top after setting the tab
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    };
+
+    // Check hash on mount
+    handleHashChange();
+
+    // Listen for hash changes
+    window.addEventListener("hashchange", handleHashChange);
+
+    return () => {
+      window.removeEventListener("hashchange", handleHashChange);
+    };
+  }, []);
 
   return (
     <>
